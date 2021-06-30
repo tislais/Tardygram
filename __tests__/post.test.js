@@ -24,7 +24,7 @@ describe('tardygram post routes', () => {
 
   });
 
-  it('', async () => {
+  it('creates a post from a known user via post', async () => {
     
     const res = await agent.post('/api/v1/posts')
       .send({
