@@ -15,13 +15,15 @@ describe('demo routes', () => {
     const res = await request(app)
       .post('/api/v1/auth/signup')
       .send({
-        email: 'test@example.com',
-        password: 'supersecretpizzaparty'
-      });
+        username: 'test@example.com',
+        password: 'supersecretpizzaparty',
+        profilePhotoUrl: 'djkfldsj'
+      });      
 
     const expected = {
       id: '1',
-      email: 'test@example.com'
+      username: 'test@example.com',
+      profilePhotoUrl: 'djkfldsj'
     };
     
     expect(res.body).toEqual(expected);
@@ -31,13 +33,14 @@ describe('demo routes', () => {
     const res = await agent
       .post('/api/v1/auth/login')
       .send({
-        email: 'test@example.com',
+        username: 'test@example.com',
         password: 'supersecretpizzaparty'
       });
-
+      
     expect(res.body).toEqual({
       id: '1',
-      email: 'test@example.com'
+      username: 'test@example.com',
+      profilePhotoUrl: 'djkfldsj'
     });
   });
 
