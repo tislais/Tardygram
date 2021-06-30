@@ -32,12 +32,12 @@ describe('demo routes', () => {
       .post('/api/v1/auth/login')
       .send({
         email: 'test@example.com',
-        password: 'password'
+        password: 'supersecretpizzaparty'
       });
 
     expect(res.body).toEqual({
       id: '1',
-      email: 'test@test.com'
+      email: 'test@example.com'
     });
   });
 
