@@ -4,11 +4,12 @@ import request from 'supertest';
 import app from '../lib/app.js';
 import UserService from '../lib/services/UserService.js';
 
-let agent;
-let user;
 
 describe('tardygram post routes', () => {
-  beforeEach(async ()=> {
+  let agent;
+  let user;
+
+  beforeEach(async () => {
     await setup(pool);
     agent = await request.agent(app);
     user = await UserService.create({
@@ -21,14 +22,12 @@ describe('tardygram post routes', () => {
         username: 'Tis',
         password: 'butts'
       });
-
   });
 
   it('creates a post from a known user via post', async () => {
-    
     const res = await agent.post('/api/v1/posts')
       .send({
-        user: user.id,
+        userId: user.id,
         photoUrl: 'cat.png',
         caption: 'my cat',
         tags: ['#cute', '#cat']
@@ -36,7 +35,7 @@ describe('tardygram post routes', () => {
 
     const expected = {
       id: '1',
-      user: user.id,
+      userId: user.id,
       photoUrl: 'cat.png',
       caption: 'my cat',
       tags: ['#cute', '#cat']}

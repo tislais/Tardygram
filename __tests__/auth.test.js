@@ -5,7 +5,7 @@ import app from '../lib/app.js';
 
 const agent = request.agent(app);
 
-describe.skip('tardygram auth routes', () => {
+describe('tardygram auth routes', () => {
   beforeAll(() => {
     return setup(pool);
   });
