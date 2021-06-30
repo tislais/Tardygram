@@ -3,6 +3,8 @@ import setup from '../data/setup.js';
 import request from 'supertest';
 import app from '../lib/app.js';
 
+const agent = request.agent(app);
+
 describe('demo routes', () => {
   beforeAll(() => {
     return setup(pool);
@@ -23,6 +25,20 @@ describe('demo routes', () => {
     };
     
     expect(res.body).toEqual(expected);
+  });
+
+  it('logs in a user via POST', async() => {
+    const res = await agent
+      .post('/api/v1/auth/login')
+      .send({
+        email: 'test@example.com',
+        password: 'password'
+      });
+
+    expect(res.body).toEqual({
+      id: '1',
+      email: 'test@test.com'
+    });
   });
 
 
