@@ -3,6 +3,8 @@ import setup from '../data/setup.js';
 import request from 'supertest';
 import app from '../lib/app.js';
 import UserService from '../lib/services/UserService.js';
+import Post from '../lib/models/Post.js';
+import Comment from '../lib/models/Comment.js';
 
 
 describe('tardygram post routes', () => {
@@ -55,7 +57,7 @@ describe('tardygram post routes', () => {
     await agent.post('/api/v1/posts').send({ ...post1, userId: user.id });
     await agent.post('/api/v1/posts').send({ ...post2, userId: user.id });
 
-    const res = await agent.get('/api/v1/posts');
+    const res = await request(app).get('/api/v1/posts');
     const expected = [
       { ...post1, id: '1', userId: '1' }, 
       { ...post2, id: '2', userId: '1' }
@@ -66,15 +68,27 @@ describe('tardygram post routes', () => {
 
   it('gets a post by id via GET', async () => {
 
-    await agent.post('/api/v1/posts').send({ ...post1, userId: user.id });
+    const post = await Post.insert({
+      ...post1,
+      userId: user.id
+    });
+
+    await Comment.insert({
+      id: '1',
+      commentBy: user.id,
+      postId: post.id,
+      comment: 'pog'
+    });
     
-    const res = await agent.get('/api/v1/posts/1');
-    const expected = { 
-      ...post1, 
-      id: '1', 
-      userId: '1' };
+    const res = await request(app).get(`/api/v1/posts/${post.id}`);
     
-    expect(res.body).toEqual(expected);
+    console.log(`\x1b[35m%s\x1b[0m`,'res.body: ', res.body);
+    
+    
+    expect(res.body).toEqual({
+      ...post,
+      comments: ['pog']
+    });
   });
 
 });
