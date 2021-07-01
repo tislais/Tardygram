@@ -68,10 +68,7 @@ describe('tardygram post routes', () => {
 
   it('gets a post by id via GET', async () => {
 
-    const post = await Post.insert({
-      ...post1,
-      userId: user.id
-    });
+    const post = await Post.insert({ ...post1, userId: user.id });
 
     await Comment.insert({
       id: '1',
@@ -86,6 +83,19 @@ describe('tardygram post routes', () => {
       ...post,
       comments: ['pog']
     });
+  });
+
+  it('updates a post via patch', async () => {
+
+    const post = await Post.insert({ ...post1, userId: user.id });
+
+    post.caption = 'pogchamp';
+    
+    const res = await agent
+      .patch(`/api/v1/posts/${post.id}`)
+      .send({ caption: 'pogchamp' });
+    
+    expect(res.body).toEqual(post);
   });
 
 });
