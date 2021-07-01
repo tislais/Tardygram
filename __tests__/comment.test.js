@@ -3,6 +3,7 @@ import setup from '../data/setup.js';
 import request from 'supertest';
 import app from '../lib/app.js';
 import UserService from '../lib/services/UserService.js';
+import Comment from '../lib/models/Comment.js';
 import Post from '../lib/models/Post.js';
 
 describe('tardygram post routes', () => {
@@ -14,10 +15,6 @@ describe('tardygram post routes', () => {
     photoUrl: 'cat.png',
     caption: 'my cat',
     tags: ['#cute', '#cat'] 
-  };
-
-  const comment = { 
-    comment: 'hella pog bro'
   };
 
   beforeEach(async () => {
@@ -39,11 +36,36 @@ describe('tardygram post routes', () => {
     post = await Post.insert({ ...post1, userId: user.id });    
     
     const res = await agent.post('/api/v1/comments')
-      .send({ ...comment, commentBy: user.userId, postId: post.id });
+      .send({ 
+        comment: 'pog', 
+        commentBy: user.userId, 
+        postId: post.id 
+      });
 
-    const expected = { ...comment, id: '1', postId: '1', commentBy: '1' };
+    const expected = { 
+      comment: 'pog', 
+      id: '1', 
+      postId: '1', 
+      commentBy: '1' };
     
     expect(res.body).toEqual(expected);
+  });
+
+  it('deletes a comment via DELETE', async () => {
+    post = await Post.insert({ ...post1, userId: user.id }); 
+    const comment = await Comment.insert({ 
+      id: '1',
+      commentBy: user.id,
+      postId: post.id,
+      comment: 'pog'
+    });
+
+    const res = await agent
+      .delete(`/api/v1/comments/${comment.id}`)
+      .send(comment);
+
+    expect(res.body).toEqual(comment);
+
   });
 
 });
