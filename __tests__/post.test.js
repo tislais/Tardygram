@@ -252,7 +252,7 @@ describe('tardygram post routes', () => {
     const res = await agent
       .get('/api/v1/posts/popular');
     
-    expect(res.body).toEqual(expect.arrayContaining([post1, post2, post3, post4, post5, post6, post7, post8, post9, post1]));
+    expect(res.body).toEqual(expect.arrayContaining([post1, post2, post3, post4, post5, post6, post7, post8, post9, post10]));
   });
 
 });
