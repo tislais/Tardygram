@@ -69,7 +69,10 @@ describe('tardygram post routes', () => {
     await agent.post('/api/v1/posts').send({ ...post1, userId: user.id });
     
     const res = await agent.get('/api/v1/posts/1');
-    const expected = post1;
+    const expected = { 
+      ...post1, 
+      id: '1', 
+      userId: '1' };
     
     expect(res.body).toEqual(expected);
   });
