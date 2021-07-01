@@ -45,9 +45,4 @@ describe('tardygram post routes', () => {
     expect(res.body).toEqual(expected);
   });
 
-  
-    // commentBy: user.userId,
-    // postId: post.id,
-
-
 });
