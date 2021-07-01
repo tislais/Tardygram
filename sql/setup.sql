@@ -18,7 +18,7 @@ CREATE TABLE posts (
 
 CREATE TABLE comments (
   id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-  comment_by TEXT NOT NULL,
+  comment_by BIGINT REFERENCES users(id),
   post_id BIGINT REFERENCES posts(id),
   comment TEXT NOT NULL
 )
