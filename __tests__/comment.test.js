@@ -36,11 +36,12 @@ describe('tardygram post routes', () => {
   });
 
   it('creates a new comment via POST', async () => {
-    const post = await Post.insert({ ...post1, userId: user.id });
+    post = await Post.insert({ ...post1, userId: user.id });    
+    
     const res = await agent.post('/api/v1/comments')
-      .send({ ...comment, commentBy: user.userId, post: post.userId });
+      .send({ ...comment, commentBy: user.userId, postId: post.id });
 
-    const expected = { ...comment, id: '1', user: '1' };
+    const expected = { ...comment, id: '1', postId: '1', commentBy: '1' };
     
     expect(res.body).toEqual(expected);
   });

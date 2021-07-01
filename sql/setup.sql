@@ -21,4 +21,5 @@ CREATE TABLE comments (
   comment_by BIGINT REFERENCES users(id),
   post_id BIGINT REFERENCES posts(id),
   comment TEXT NOT NULL
-)
+);
+
