@@ -52,9 +52,12 @@ describe('tardygram post routes', () => {
     expect(res.body).toEqual(expected);
   });
 
-  it('gets all posts via GET', async () => {
+  it('gets all posts via GET', async () => {    
     
-    await agent.post('/api/v1/posts').send({ ...post1, userId: user.id });
+    await agent.post('/api/v1/posts').send(
+      { ...post1, 
+        userId: user.id 
+      });
     await agent.post('/api/v1/posts').send({ ...post2, userId: user.id });
 
     const res = await request(app).get('/api/v1/posts');
@@ -94,6 +97,15 @@ describe('tardygram post routes', () => {
     const res = await agent
       .patch(`/api/v1/posts/${post.id}`)
       .send({ caption: 'pogchamp' });
+    
+    expect(res.body).toEqual(post);
+  });
+
+  it('deletes a post via DELETE', async () => {
+
+    const post = await Post.insert({ ...post1, userId: user.id });
+    const res = await agent
+      .delete(`/api/v1/posts/${post.id}`);
     
     expect(res.body).toEqual(post);
   });
