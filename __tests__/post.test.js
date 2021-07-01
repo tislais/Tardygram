@@ -110,4 +110,149 @@ describe('tardygram post routes', () => {
     expect(res.body).toEqual(post);
   });
 
+  it('gets a list of 10 posts with the most with the most comments', async () => {
+
+    const post1 = await Post.insert({
+      photoUrl: 'cat1.png',
+      caption: 'my cat',
+      tags: ['#cute', '#cat'],
+      userId: user.id
+    });
+
+    await Comment.insert({
+      commentBy: user.id,
+      postId: post1.id,
+      comment: 'comment'
+    });
+
+    const post2 = await Post.insert({
+      photoUrl: 'cat2.png',
+      caption: 'my cat',
+      tags: ['#cute', '#cat'],
+      userId: user.id
+    });
+
+    await Comment.insert({
+      commentBy: user.id,
+      postId: post2.id,
+      comment: 'comment'
+    });
+
+    const post3 = await Post.insert({
+      photoUrl: 'cat3.png',
+      caption: 'my cat',
+      tags: ['#cute', '#cat'],
+      userId: user.id
+    });
+
+    await Comment.insert({
+      commentBy: user.id,
+      postId: post3.id,
+      comment: 'comment'
+    });
+
+    const post4 = await Post.insert({
+      photoUrl: 'cat4.png',
+      caption: 'my cat',
+      tags: ['#cute', '#cat'],
+      userId: user.id
+    });
+
+    await Comment.insert({
+      commentBy: user.id,
+      postId: post4.id,
+      comment: 'comment'
+    });
+
+    const post5 = await Post.insert({
+      photoUrl: 'cat5.png',
+      caption: 'my cat',
+      tags: ['#cute', '#cat'],
+      userId: user.id
+    });
+
+    await Comment.insert({
+      commentBy: user.id,
+      postId: post5.id,
+      comment: 'comment'
+    });
+
+    const post6 = await Post.insert({
+      photoUrl: 'cat6.png',
+      caption: 'my cat',
+      tags: ['#cute', '#cat'],
+      userId: user.id
+    });
+
+    await Comment.insert({
+      commentBy: user.id,
+      postId: post6.id,
+      comment: 'comment'
+    });
+    
+    const post7 = await Post.insert({
+      photoUrl: 'cat7.png',
+      caption: 'my cat',
+      tags: ['#cute', '#cat'],
+      userId: user.id
+    });
+
+    await Comment.insert({
+      commentBy: user.id,
+      postId: post7.id,
+      comment: 'comment'
+    });
+
+    const post8 = await Post.insert({
+      photoUrl: 'cat8.png',
+      caption: 'my cat',
+      tags: ['#cute', '#cat'],
+      userId: user.id
+    });
+
+    await Comment.insert({
+      commentBy: user.id,
+      postId: post8.id,
+      comment: 'comment'
+    });
+
+    const post9 = await Post.insert({
+      photoUrl: 'cat9.png',
+      caption: 'my cat',
+      tags: ['#cute', '#cat'],
+      userId: user.id
+    });
+
+    await Comment.insert({
+      commentBy: user.id,
+      postId: post9.id,
+      comment: 'comment'
+    });
+
+    const post10 = await Post.insert({
+      photoUrl: 'cat10.png',
+      caption: 'my cat',
+      tags: ['#cute', '#cat'],
+      userId: user.id
+    });
+
+    await Comment.insert({
+      commentBy: user.id,
+      postId: post10.id,
+      comment: 'comment'
+    });
+
+    await Post.insert({
+      photoUrl: 'cat11.png',
+      caption: 'my cat',
+      tags: ['#cute', '#cat'],
+      userId: user.id
+    });
+
+    const res = await agent
+      .get('/api/v1/posts/popular');
+    
+    expect(res.body).toEqual(expect.arrayContaining([post1, post2, post3, post4, post5, post6, post7, post8, post9, post1]));
+  });
+
 });
