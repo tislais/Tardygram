@@ -80,10 +80,7 @@ describe('tardygram post routes', () => {
       comment: 'pog'
     });
     
-    const res = await request(app).get(`/api/v1/posts/${post.id}`);
-    
-    console.log(`\x1b[35m%s\x1b[0m`,'res.body: ', res.body);
-    
+    const res = await request(app).get(`/api/v1/posts/${post.id}`);    
     
     expect(res.body).toEqual({
       ...post,
